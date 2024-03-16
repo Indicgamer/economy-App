@@ -34,24 +34,26 @@ const sendMoneyController = async(req,res)=>{
                 status: "Failure"
             });
         }
-        if(sender.amount< req.body.amount){
+        const senderBalance = parseInt(sender.amount);
+        const sendingAmount = parseInt(req.body.amount);
+        if(senderBalance< sendingAmount){
             return res.status(200).send({
                 message: "Insufficient balance.",
                 status: "Faiure"
             });
         }
-        if(req.body.amount<=0){
+        if(sendingAmount<=0){
             return res.status(200).send({
                 message: "Invalid amount.",
                 status: "Faiure"
             });
         }
-        sender.amount -= parseInt(req.body.amount);
-        receiver.amount += parseInt(req.body.amount);
+        sender.amount -= sendingAmount;
+        receiver.amount += sendingAmount;
         const transaction = new transactionModel({
             sender: req.cookies.name,
             receiver: req.params.name,
-            amount: parseInt(req.body.amount),
+            amount: sendingAmount,
             date: new Date(),
             status: "success"
         });

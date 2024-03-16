@@ -6,6 +6,15 @@ const {userModel,transactionModel} = require("../config/db");
 const Router = express.Router();
 const URL = "https://economy-app.vercel.app";
 
+Router.get("/",(req,res)=>{
+    if(req.cookies.name){
+        res.redirect("main");
+    }else{
+        res.render("pages/index.ejs");
+    }
+   
+})
+
 
 Router.get("/balance",async (req,res)=>{
     if(req.cookies.name){
