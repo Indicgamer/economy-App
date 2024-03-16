@@ -123,8 +123,9 @@
                 alert("Please enter a valid amount");
             }
             else{
-                window.location.href = "/send/"+user+"/"+amount.value;
                 document.getElementById("blocker").classList.remove("hidden");
+                window.location.href = "/send/"+user+"/"+amount.value;
+                
                 
             }
        }
