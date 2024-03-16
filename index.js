@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+app.set("views",app.set("views", path.join(__dirname, "views")));
 
 
 app.use("/api/auth",require("./routes/authRouters"));
