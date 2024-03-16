@@ -4,7 +4,7 @@ const {userModel,transactionModel} = require("../config/db");
 
 
 const Router = express.Router();
-const URL = "http://localhost:3030";
+const URL = "https://economy-app.vercel.app";
 
 
 Router.get("/balance",async (req,res)=>{
