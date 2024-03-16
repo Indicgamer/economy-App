@@ -46,12 +46,12 @@ const sendMoneyController = async(req,res)=>{
                 status: "Faiure"
             });
         }
-        sender.amount -= req.body.amount;
-        receiver.amount += req.body.amount;
+        sender.amount -= parseInt(req.body.amount);
+        receiver.amount += parseInt(req.body.amount);
         const transaction = new transactionModel({
             sender: req.cookies.name,
             receiver: req.params.name,
-            amount: req.body.amount,
+            amount: parseInt(req.body.amount),
             date: new Date(),
             status: "success"
         });
