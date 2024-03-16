@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economy App</title>
+    <link rel="stylesheet" href="../output.css">
+</head>
+<body class="bg-[#41EAD4] flex flex-col h-screen">
+    <header class="bg-[#FF206E] px-5 py-5"> 
+        <nav class="flex justify-center items-center">
+            <a href="#" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
+        </nav>
+    </header>
+    <div class="w-[90%] md:w-[80%] mx-auto bg-[#FBFF12] flex flex-col mt-10 mb-20 px-5 pb-8 flex-1">
+        <div class="flex justify-center gap-3 py-2 items-center">
+            <img src="../img/user.png" alt="user.png">
+            <h1 class="md:text-3xl text-xl w-fit text-center leading-none font-montserrat font-semibold"><%= name %></h1>
+        </div>
+        
+        <div class="pt-5 bg-[#FFFFFF] flex-1 flex flex-col-reverse gap-8">
+            <div class="flex w-full border-[#FF206E] border-2 sendbtn">
+                <input type="text" name="amount" placeholder="Enter Amount" class="w-full outline-none" id="amount">
+                <div class="flex items-center justify-center px-3 py-2 bg-[#FF206E] cursor-pointer send">
+                    <img src="../img/send.png" alt="png" id="<%= name %>">
+                </div>
+            </div>
+
+            <% groupedTransactions.forEach(element => { %>
+               
+                <% element.transactions.forEach(transaction => { %>
+                    <% if(transaction.sender === name){ %>
+                        <div class="w-fit mr-auto flex gap-1 items-start">
+                    <% }else{ %>
+                        <div class="w-fit ml-auto flex flex-row-reverse gap-1 items-start">
+                    <% } %>
+                        <p class="px-4 py-2 rounded-full bg-[#0C0F0A] font-bold text-white">
+                            <% if(transaction.sender === name){  %>
+                                <%= transaction.sender[0]  %>
+                            <% }else{ %>
+                                *
+                            <% } %>
+                        </p>
+                        <div class="w-full rounded-xl bg-[#FF206E] px-4 py-3">
+                            <p><%= transaction.amount %> DPC</p>
+                            <div class="flex gap-1">
+                                <img src="../img/check.png" alt="tick.png" class="max-sm:w-5">
+                                <p class="max-sm:text-sm">Sent Securely</p>
+                            </div>
+                            <p class="w-fit  mt-2 text-montserrat ml-auto"><%= transaction.date.getHours()  %>: <%= transaction.date.getMinutes();  %></p>
+                        </div>
+                    </div>       
+    
+                <% });  %>
+                
+                <p class="text-montserrat w-fit px-3 max-sm:text-xs mx-auto font-bold rounded-full text-center bg-[#41EAD4]"><%= element.date.date %> <%= element.date.month %> <%= element.date.year %></p>
+    
+            <% }); %>
+            
+
+
+            <!-- <div class="w-fit mr-auto flex gap-1 items-start">
+                <p class="px-4 py-2 rounded-full bg-[#0C0F0A] font-bold text-white">I</p>
+                max-sm:px-3 px-2 py-3 md:px-5 md:py-5
+                <div class="w-full rounded-xl bg-[#FF206E] px-4 py-3">
+                    <p>45 DPC</p>
+                    <div class="flex gap-1">
+                        <img src="../img/check.png" alt="tick.png" class="max-sm:w-5">
+                        <p class="max-sm:text-sm">Sent Securely</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-montserrat w-fit px-3 max-sm:text-xs mx-auto font-bold rounded-full text-center bg-[#41EAD4]">October 24 2023</p>
+
+            <div class="w-fit mr-auto flex gap-1 items-start">
+                <p class="px-4 py-2 rounded-full bg-[#0C0F0A] font-bold text-white">I</p>
+                max-sm:px-3 px-2 py-3 md:px-5 md:py-5
+                <div class="w-full rounded-xl bg-[#FF206E] px-4 py-3">
+                    <p>45 DPC</p>
+                    <div class="flex gap-1">
+                        <img src="../img/check.png" alt="tick.png" class="max-sm:w-5">
+                        <p class="max-sm:text-sm">Sent Securely</p>
+                    </div>
+                </div>
+            </div> -->
+
+           
+            
+        </div>
+
+    </div>
+</body>
+<script>
+    let user = "<%= name %>";
+    const amount = document.getElementById("amount");
+    const sendbtn = document.querySelector(".sendbtn");
+    console.log(sendbtn);
+    const send = document.querySelector(".send");
+
+    sendbtn.addEventListener("click", () => {
+        console.log("clicked")
+        sendbtn.classList.remove("border-2");
+        sendbtn.classList.add("border-4");
+    });
+    document.addEventListener("click", (e) => {
+        if(e.target !== sendbtn){
+            sendbtn.classList.add("border-2");
+            sendbtn.classList.remove("border-4");
+        }
+    });
+
+    send.addEventListener("click", () => {
+       if(amount.value){
+            if(isNaN(amount.value)){
+                alert("Please enter numeric value");
+            }
+            if(amount.value > 0){
+              window.location.href = "/send/"+user+"/"+amount.value;
+            }
+            else{
+                alert("Please enter a valid amount");
+            }
+       }
+       else{
+            alert("Please enter amount");
+       }
+    });
+    
+
+</script>
+</html>

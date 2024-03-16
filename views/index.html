@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economy App</title>
+    <link href="./output.css" rel="stylesheet">
+</head>
+<body class="bg-[#FFFFFF] flex flex-col h-screen">
+    <header class="bg-[#FF206E] px-5 py-5"> 
+        <nav class="flex justify-center items-center">
+            <a href="#" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
+        </nav>
+    </header>
+
+    <div class="main flex flex-1 justify-center items-center bg-[#41EAD4]">
+        <div class="bg-[#FBFF12] py-5 px-10">
+            <form action="/api/auth/login" method="post" >
+                <div class="">
+                    <h1 class="text-2xl font-montserrat text-center font-bold" id="card-title">Log-in</h1>
+                </div>
+                <div class="flex flex-col gap-8 items-center py-5 ">
+                    <div>
+                        <label for="name" class="text-xl font-montserrat font-medium">Name: </label>
+                        <input type="text" name="name" id="name" class="rounded-md" placeholder="Enter your name">
+                    </div>
+                    <div>
+                        <label for="password" class="text-xl font-montserrat font-medium">Password: </label>
+                        <input type="password" name="password" id="password" class="rounded-md" placeholder="Enter your password">
+                    </div>
+                    <div>
+                        <input type="submit" value="Submit" class="text-xl px-5 py-3 bg-[#FF206E] rounded-full text-[#FFFFFF] hover:scale-105 hover:cursor-pointer hover:font-medium">
+                    </div>
+                </div>
+            </form>
+            <div class="flex justify-center">
+                <a href="#" class="underline" id="register">New User?Register here</a>
+            </div>
+         </div>
+    </div>
+    
+</body>
+<script>
+    const register = document.getElementById('register');
+    const cardTitle = document.getElementById('card-title');
+    const form = document.querySelector("form");
+
+    register.addEventListener('click', (e) => {
+        e.preventDefault();
+        if(cardTitle.textContent === 'Log-in'){
+            cardTitle.textContent = 'Register';
+            form.setAttribute("action", "/api/auth/register");
+            register.textContent = 'Already a user? Log-in here';
+        }else{
+            cardTitle.textContent = 'Log-in';
+            form.setAttribute("action", "/api/auth/login");
+            register.textContent = 'New User?Register here';
+        }
+    });
+
+
+
+    
+
+
+</script>
+</html>

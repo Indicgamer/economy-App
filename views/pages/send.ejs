@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economy App</title>
+    <link rel="stylesheet" href="../output.css">
+</head>
+
+<body>
+    <header class="bg-[#FF206E] px-5 py-5"> 
+        <nav class="flex justify-center items-center">
+            <a href="#" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
+        </nav>
+    </header>
+    <div class="w-[80%] mx-auto bg-[#FF206E] my-10 px-5 py-5 flex flex-col gap-8 items-center ">
+        <div class="search flex w-[80%] gap-5 pl-3 border-[#FFFFFF] bg-[#FFFFFF] border-4 rounded-3xl">
+            <img src="../img/search-interface-symbol.png" alt="search-icon" class="cursor-pointer">
+            <input type="text" class="w-full outline-none searchbtn" placeholder="Search users">
+        </div>
+        <div id="searchedResults" class="hidden absolute top-[168px] z-10 bg-[#FFFFFF] max-sm:w-[50%] w-[55%] lg:w-[60%]  flex-col gap-5 py-5 px-5  border-b-2 border-l-2 border-r-2 border-black rounded-b-xl">
+            
+        
+        </div>
+        <%= selectedUsers  %>
+        <div  class="md:w-[80%] w-full">
+            <h1 class="text-2xl font-monserrat font-medium text-[#FFFFFF]">Past Transactions</h1>
+            <div class=" my-5 ">
+                <% pastTransactions.forEach((element,index) => { %>
+                    <% if(index === pastTransactions.length-1){ %>
+                        <div class="user flex justify-between items-center bg-[#FFFFFF] p-3 rounded-b-3xl cursor-pointer" id="<%= element.name  %>">
+                    <% } %>
+                    <% if(index === 0){ %>
+                        <div class="user flex justify-between items-center bg-[#FFFFFF] p-3 rounded-t-3xl cursor-pointer" id="<%= element.name  %>">
+                    <% } %>
+                    <% if(index !== 0 && index !== pastTransactions.length-1){ %>
+                        <div class="user flex justify-between items-center bg-[#FFFFFF] p-3 cursor-pointer" id="<%= element.name  %>">
+                    <% } %>
+                        <div class="flex gap-5 items-center">
+                            <img src="../img/user.png" alt="user" class="w-10 h-10  rounded-full">
+                            <div>
+                                <h1 class="text-xl font-monserrat font-medium"><%= element.name%></h1>
+                                <p class="text-sm font-monserrat font-light"><% if (element.transactions[0].reciever === element.name) { %>
+                                    <%= element.transactions[0].amount %> DPC Recieved
+                                <% } else { %>
+                                    You: Sent <%= element.transactions[0].amount %> DPC
+                                <% } %></p>
+                            </div>
+                        </div>
+                    </div>
+                    <% if(index != pastTransactions.length-1){ %>
+                    <hr class="h-[2px] bg-black">
+                    <% } %>
+                <% }); %>
+                <!-- template -->
+                <!-- <div class=" user flex justify-between items-center bg-[#FFFFFF] p-3 rounded-t-3xl cursor-pointer" id="indic gamer">
+                    <div class="flex gap-5 items-center">
+                        <img src="../img/user.png" alt="user" class="w-10 h-10  rounded-full">
+                        <div>
+                            <h1 class="text-xl font-monserrat font-medium">indic gamer</h1>
+                            <p class="text-sm font-monserrat font-light">You: Sent 500 DPC</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="h-[2px] bg-black"> -->
+                
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let allUSers ="<%= Users %>";
+    let USer = "<%= User%>";
+    allUSers = allUSers.split(",");
+    const search = document.querySelector('.searchbtn');
+    const users = document.querySelectorAll('.user');
+    const searchedResults = document.getElementById('searchedResults');
+
+    users.forEach(user=>{
+        user.addEventListener('click', ()=>{
+            window.location.href = '/send/'+user.id;
+        })
+    })
+
+    let searchResults = [];
+    let searchString = "";
+    search.addEventListener('keyup', (e)=>{
+        searchString = e.target.value;
+        searchResults = allUSers.filter(user=>{
+            return user.toLowerCase().startsWith(searchString.toLowerCase());
+        })
+        if(searchString !== ""){
+            if(searchResults.length === 0 || searchResults[0] === USer){
+                searchedResults.innerHTML = "<h1>No results found</h1>";
+                searchedResults.classList.remove('hidden');
+                searchedResults.classList.add("flex");
+            }else{
+                searchedResults.innerHTML = "";
+                searchResults.forEach(user=>{
+                    if(user !== USer){
+                        searchedResults.innerHTML += 
+                        `<div class="flex gap-5 cursor-pointer searchedUser" id="${user}">
+                            <img src="../img/user.png" alt="user.png">
+                            <h1>${user}</h1>
+                        </div >`
+                    }
+                })
+                const searchedUsers = document.querySelectorAll('.searchedUser');
+                searchedUsers.forEach(user=>{
+                    user.addEventListener('click', ()=>{
+                        window.location.href = '/send/'+user.id;
+                    })
+                })
+                searchedResults.classList.remove('hidden');
+                searchedResults.classList.add("flex");
+            }
+        }
+        else{
+            searchedResults.classList.remove('flex');
+            searchedResults.classList.add("hidden");
+        }
+
+    });
+
+    
+    
+  
+    
+</script>
+</html>
