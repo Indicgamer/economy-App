@@ -90,6 +90,10 @@
         </div>
 
     </div>
+
+    <div class="h-screen w-screen absolute opacity-0 hidden" id="blocker">
+
+    </div>
 </body>
 <script>
     let user = "<%= name %>";
@@ -115,11 +119,13 @@
             if(isNaN(amount.value)){
                 alert("Please enter numeric value");
             }
-            if(amount.value > 0){
-              window.location.href = "/send/"+user+"/"+amount.value;
+            if(amount.value <= 0){
+                alert("Please enter a valid amount");
             }
             else{
-                alert("Please enter a valid amount");
+                window.location.href = "/send/"+user+"/"+amount.value;
+                document.getElementById("blocker").classList.remove("hidden");
+                
             }
        }
        else{
