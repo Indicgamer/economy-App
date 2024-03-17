@@ -8,7 +8,7 @@ const registerController = async(req,res)=>{
             return res.status(400).send("Name and password are required.");
         }
         const username = String(req.body.name).trim();
-        const password = String(req.body.password).trim();
+        const password = String(req.body.password);
         const existingUser = await userModel.findOne({name:username});
         if(existingUser){
             return res.status(400).send("User already exists.");
@@ -43,11 +43,12 @@ const loginController = async(req,res)=>{
         if(!req.body.name || !req.body.password){
             return res.status(400).send("Name and password are required.");
         }
-        const user = await userModel.findOne({name:req.body.name});
+        const username = String(req.body.name).trim();
+        const password = String(req.body.password);
+        const user = await userModel.findOne({name:username});
         if(!user){
             return res.status(400).send("User does not exist.");
         }
-        const password = String(req.body.password);
         const validPassword = await bcrypt.compare(password,user.password);
         if(!validPassword){
             return res.status(400).send("Invalid password.");
