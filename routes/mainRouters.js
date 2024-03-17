@@ -11,6 +11,7 @@ if(isProduction){
     URL ="https://economy-app.vercel.app";
 }else{
     URL = "http://localhost:"+process.env.PORT;
+    
 }
 
 Router.get("/",(req,res)=>{
