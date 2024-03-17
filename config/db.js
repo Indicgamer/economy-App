@@ -3,9 +3,13 @@ require("dotenv").config();
 
 const dbURL = process.env.DATABASE_URL;
 
-(async ()=>{
-    await mongoose.connect(dbURL);
-})();
+try {
+    (async ()=>{
+        await mongoose.connect(dbURL);
+    })();
+} catch (error) {
+    console.log(error.message);
+}
 
 
 const users = new mongoose.Schema({
