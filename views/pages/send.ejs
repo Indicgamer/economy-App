@@ -10,16 +10,19 @@
 <body>
     <header class="bg-[#FF206E] px-5 py-5"> 
         <nav class="flex justify-center items-center">
-            <a href="#" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
+            <a href="/" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
         </nav>
     </header>
+
+
+
     <div class="w-[80%] mx-auto bg-[#FF206E] my-10 px-5 py-5 flex flex-col gap-8 items-center ">
         <div class="search flex w-[80%] gap-5 pl-3 border-[#FFFFFF] bg-[#FFFFFF] border-4 rounded-3xl">
             <img src="../img/search-interface-symbol.png" alt="search-icon" class="cursor-pointer">
             <input type="text" class="w-full outline-none searchbtn" placeholder="Search users">
         </div>
         <div id="searchedResults" class="hidden absolute top-[168px] z-10 bg-[#FFFFFF] max-sm:w-[50%] w-[55%] lg:w-[60%]  flex-col gap-5 py-5 px-5  border-b-2 border-l-2 border-r-2 border-black rounded-b-xl">
-            
+    
         
         </div>
         <%= selectedUsers  %>
@@ -72,10 +75,12 @@
     let allUSers ="<%= Users %>";
     let USer = "<%= User%>";
     allUSers = allUSers.split(",");
+
     const search = document.querySelector('.searchbtn');
     const users = document.querySelectorAll('.user');
     const searchedResults = document.getElementById('searchedResults');
-
+   
+    
     users.forEach(user=>{
         user.addEventListener('click', ()=>{
             window.location.href = '/send/'+user.id;
@@ -90,7 +95,7 @@
             return user.toLowerCase().startsWith(searchString.toLowerCase());
         })
         if(searchString !== ""){
-            if(searchResults.length === 0 || searchResults[0] === USer){
+            if(searchResults.length === 0 || (searchedResults.length === 1 && searchedResults[0] === USer)){
                 searchedResults.innerHTML = "<h1>No results found</h1>";
                 searchedResults.classList.remove('hidden');
                 searchedResults.classList.add("flex");

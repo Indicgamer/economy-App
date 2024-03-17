@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economy App</title>
+    <link rel="stylesheet" href="../../output.css">
+</head>
+<body class="flex flex-col h-screen">
+    <header class="bg-[#FF206E] px-5 py-5"> 
+        <nav class="flex justify-center items-center">
+            <a href="/" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
+        </nav>
+    </header>
+    <div class="w-full h-screen absolute top-0 flex-col justify-center items-center hidden" id="blocker">
+        <img src="../../img/loading.gif" alt="loading-gif" class="hidden" id="loader" width="50">
+    </div>
+
+    
+    <div class="flex flex-1 justify-center  items-center">
+        <div class="bg-[#FF206E] px-5 py-5 mb-14 flex flex-col items-center rounded-xl">
+            <h1 class="text-3xl leading-none font-montserrat mb-5 text-[#FFFFFF]">Enter Password</h1>
+            <form action="/payment" method="post" class="flex flex-col items-center gap-5">
+                <div>
+                    <input type="password" name="password" id="password" class="rounded-md" required placeholder="Enter your password" class="w-full">
+                </div>
+                <div>
+                    <input type="submit" name="submit" id="submit" class="bg-white px-4 py-3 rounded-full hover:scale-105 cursor-pointer">
+                </div>
+                <input type="number" name="amount" value="<%=amount%>" class="hidden">
+                <input type="text" name="receiver" value="<%=receiver%>" class="hidden">
+            </form>
+            
+        </div>
+    </div>
+</body>
+<script>
+    const submit = document.getElementById('submit');
+    const blocker = document.getElementById("blocker");
+    const loader = document.getElementById("loader")
+    submit.addEventListener('click',()=>{
+        blocker.classList.remove("hidden");
+        blocker.classList.add("flex");
+        loader.classList.remove("hidden");
+    })
+</script>
+</html>

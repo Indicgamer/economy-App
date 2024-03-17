@@ -64,4 +64,42 @@ const loginController = async(req,res)=>{
     }
 }
 
-module.exports = {registerController,loginController};
+const validateUser = async(req,res)=>{
+    try{
+        if(req.cookies.name){
+            const User = await userModel.findOne({name:req.cookies.name});
+            if(User){
+                const password = String(req.body.password);
+                const validPassword = await bcrypt.compare(password,User.password);
+                if(!validPassword){
+                    return res.status(400).send({
+                        message: "Invalid Password",
+                        status: "Failure"
+                    });
+                }
+                return res.status(200).send({
+                    message: "Validation Successful",
+                    status: "Success"
+                })
+            }
+            else{
+                return res.status(400).send({
+                    message: "User does not exist",
+                    status: "Failure"
+                });
+            }
+
+        }
+        else{
+            return res.status(401).send("401 Unauthorized");
+        }
+    }
+    catch(e){
+        console.log(e);
+        res.status(500).send({
+            message: "Internal server error.",
+            error: e.message
+        });
+    }
+}
+module.exports = {registerController,loginController,validateUser};

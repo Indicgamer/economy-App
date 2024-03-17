@@ -1,10 +1,17 @@
 const express = require('express');
 const axios = require('axios');
 const {userModel,transactionModel} = require("../config/db");
+require("dotenv").config();
 
 
 const Router = express.Router();
-const URL = "https://economy-app.vercel.app";
+const isProduction = process.env.NODE_MODE === "production";
+let URL;
+if(isProduction){
+    URL ="https://economy-app.vercel.app";
+}else{
+    URL = "http://localhost:"+process.env.PORT;
+}
 
 Router.get("/",(req,res)=>{
     if(req.cookies.name){
@@ -196,31 +203,60 @@ Router.get("/send/:name",async (req,res)=>{
 
 })
 
-Router.get("/send/:name/:amount",async (req,res)=>{
+Router.get("/payment/:name/:amount",async (req,res)=>{
     if(req.cookies.name){
+        const receiver = req.params.name;
+        const amount = parseInt(req.params.amount);
+        res.render("pages/payment.ejs",{
+            receiver:receiver,
+            amount:amount,
+            sender: req.cookies.name
+        });
+    } 
+    else{
+        res.status(401).send("401 Unauthorized");
+    }
+});
+
+Router.post("/payment",async (req,res)=>{
+    if(req.cookies.name){
+        const receiver = req.body.receiver;
+        const amount = parseInt(req.body.amount);
         try {
-            const reciever = req.params.name;
-            const amount = req.params.amount;
-            const {data} = await axios.post(URL+"/api/transact/send/"+reciever,{
+            const response = await axios.post(URL+'/api/transact/send/'+receiver,{
                 amount:amount
             },{
-                headers:{
-                    Cookie: req.headers.cookie,
+                headers: {
+                    Cookie: req.headers.cookie
                 }
             });
-            if(data.status === "Success"){
-                console.log("success");
-                res.redirect("../../../send");
+            if(response.data.status === "Success"){
+                res.render("pages/result.ejs",{
+                    transactDetails:{
+                        status: "Success",
+                        message: response.data.message
+                    } 
+                });
             }
             else{
-                res.send(data.message);
+                res.render("pages/result.ejs",{
+                    transactDetails:{
+                        status: "Failure",
+                        message: response.data.message
+                    }
+                });
             }
-
             
         } catch (error) {
-            console.log(error.message);
-            res.status(500).send("Internal sever error");
+            console.log(error);
+            res.status(500).send({
+               transactDetails:{
+                status: "Failure",
+                message: "Internal server error"
+               }
+            });
         }
+        
     }
     else{
         res.status(401).send("401 Unauthorized");

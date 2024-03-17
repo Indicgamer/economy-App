@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
+
+const dbURL = process.env.DATABASE_URL;
 
 (async ()=>{
-    await mongoose.connect("mongodb+srv://indic_gamer:admin123@cluster0.3gah2fh.mongodb.net/economy?retryWrites=true&w=majority&appName=Cluster0")
+    await mongoose.connect(dbURL);
 })();
+
 
 const users = new mongoose.Schema({
     name:String,

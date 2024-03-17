@@ -9,7 +9,7 @@
 <body class="bg-[#41EAD4] flex flex-col h-screen">
     <header class="bg-[#FF206E] px-5 py-5"> 
         <nav class="flex justify-center items-center">
-            <a href="#" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
+            <a href="/" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
         </nav>
     </header>
     <div class="w-[90%] md:w-[80%] mx-auto bg-[#FBFF12] flex flex-col mt-10 mb-20 px-5 pb-8 flex-1">
@@ -91,9 +91,6 @@
 
     </div>
 
-    <div class="h-screen w-screen absolute  bg-black z-10 hidden" id="blocker">
-            1
-    </div>
 </body>
 <script>
     let user = "<%= name %>";
@@ -115,18 +112,18 @@
     });
 
     send.addEventListener("click", () => {
-       if(amount.value){
-            if(isNaN(amount.value)){
+        const amountValue = parseInt(amount.value);
+       if(amountValue){
+            if(isNaN(amountValue)){
                 alert("Please enter numeric value");
             }
-            if(amount.value <= 0){
+            if(amountValue <= 0){
                 alert("Please enter a valid amount");
             }
             else{
-                document.getElementById("blocker").classList.remove("hidden");
-                window.location.href = "/send/"+user+"/"+amount.value;
-                
-                
+                sessionStorage.setItem("amount", amountValue);
+                sessionStorage.setItem("reciever",user);
+                window.location.href = "/payment/"+user+"/"+amountValue;                
             }
        }
        else{

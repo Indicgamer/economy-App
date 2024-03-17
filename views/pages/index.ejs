@@ -9,12 +9,12 @@
 <body class="bg-[#FFFFFF] flex flex-col h-screen">
     <header class="bg-[#FF206E] px-5 py-5"> 
         <nav class="flex justify-center items-center">
-            <a href="#" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
+            <a href="/" class=" text-3xl text-[#FFFFFF] font-merriweather font-bold">DPC</a>
         </nav>
     </header>
 
     <div class="main flex flex-1 justify-center items-center bg-[#41EAD4]">
-        <div class="bg-[#FBFF12] py-5 px-10">
+        <div class="bg-[#FBFF12] py-5 px-10 max-sm:px-5">
             <form action="/api/auth/login" method="post" >
                 <div class="">
                     <h1 class="text-2xl font-montserrat text-center font-bold" id="card-title">Log-in</h1>
@@ -22,11 +22,11 @@
                 <div class="flex flex-col gap-8 items-center py-5 ">
                     <div>
                         <label for="name" class="text-xl font-montserrat font-medium">Name: </label>
-                        <input type="text" name="name" id="name" class="rounded-md" placeholder="Enter your name">
+                        <input type="text" name="name" id="name" class="rounded-md" required placeholder="Enter your name">
                     </div>
                     <div>
                         <label for="password" class="text-xl font-montserrat font-medium">Password: </label>
-                        <input type="password" name="password" id="password" class="rounded-md" placeholder="Enter your password">
+                        <input type="password" name="password" id="password" class="rounded-md" required placeholder="Enter your password">
                     </div>
                     <div>
                         <input type="submit" value="Submit" class="text-xl px-5 py-3 bg-[#FF206E] rounded-full text-[#FFFFFF] hover:scale-105 hover:cursor-pointer hover:font-medium">

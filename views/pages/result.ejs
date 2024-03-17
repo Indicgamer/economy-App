@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economy App</title>
+    <link rel="stylesheet" href="../output.css">
+</head>
+<body class="bg-[#41EAD4]">
+    <% if(locals.transactDetails){ %>
+        <div class="absolute top-0 w-full h-screen flex justify-center items-center" id="message">
+            <% if(transactDetails.status === "Success"){ %>
+                <div class="bg-[#FBFF12] px-5 py-3 rounded-3xl flex gap-5 flex-col items-center" id>
+                    <h1 class="text-xl font-monserrat font-medium text-black">Transaction Successful</h1>
+                    <div>
+                        <button class="bg-[#FF206E] px-3 py-3 font-montserrat font-semibold hover:scale-105 cursor-pointer rounded-full" id="ok">OK</button>
+                    </div>
+                    
+                </div>
+            <% }else{%>
+                <div class="bg-[#FBFF12] px-5 py-3 rounded-3xl flex gap-5 flex-col items-center">
+                    <h1 class="text-xl font-monserrat font-medium text-black">Transaction Failed</h1>
+                    <p class="font-montserrat text-[#FFFFF]"><%= transactDetails.message  %></p>
+                    <div>
+                        <button class="bg-[#FF206E] px-3 py-3 font-montserrat font-semibold hover:scale-105 cursor-pointer rounded-full" id="ok">OK</button>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    <% } %> 
+
+    
+</body>
+<script>
+    const ok = document.getElementById('ok');
+    ok.addEventListener('click', ()=>{
+        window.location.href = '/main';
+    });
+</script>
+</html>
