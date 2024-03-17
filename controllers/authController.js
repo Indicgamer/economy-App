@@ -25,7 +25,7 @@ const registerController = async(req,res)=>{
             amount: 100
         });
         await newBalance.save();
-        res.cookie("name",req.body.name);
+        res.cookie("name",username);
         res.redirect("../../main");
     }
     catch(e){
@@ -53,7 +53,7 @@ const loginController = async(req,res)=>{
         if(!validPassword){
             return res.status(400).send("Invalid password.");
         }
-        res.cookie("name",req.body.name);
+        res.cookie("name",username);
         res.redirect("../../main");
         // res.status(200).send("Login successful.");
     } catch (e) {
