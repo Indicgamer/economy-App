@@ -7,21 +7,21 @@ const registerController = async(req,res)=>{
         if(!req.body.name || !req.body.password){
             return res.status(400).send("Name and password are required.");
         }
-        const existingUser = await userModel.findOne({name:req.body.name});
+        const username = String(req.body.name).trim();
+        const password = String(req.body.password).trim();
+        const existingUser = await userModel.findOne({name:username});
         if(existingUser){
             return res.status(400).send("User already exists.");
         }
-    
-        const password = String(req.body.password);
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt);
         const user = new userModel({
-            name:req.body.name,
+            name:username,
             password:hashedPassword
         });
         await user.save();
         const newBalance = new balanceModel({
-            name:req.body.name,
+            name:username,
             amount: 100
         });
         await newBalance.save();
