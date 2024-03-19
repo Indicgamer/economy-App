@@ -17,8 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.set("views",path.join(__dirname, "views"));
-console.log(path.join(__dirname, "views"));
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+});
 
 app.use("/api/auth",require("./routes/authRouters"));
 app.use("/api/transact",require("./routes/transactionRouters"));

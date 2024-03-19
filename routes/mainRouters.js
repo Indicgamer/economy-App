@@ -207,6 +207,7 @@ Router.get("/send/:name",async (req,res)=>{
 Router.get("/payment/:name/:amount",async (req,res)=>{
     if(req.cookies.name){
         const receiver = req.params.name;
+        console.log(receiver.length);
         const amount = parseInt(req.params.amount);
         res.render("pages/payment.ejs",{
             receiver:receiver,

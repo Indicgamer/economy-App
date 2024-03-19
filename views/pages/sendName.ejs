@@ -94,9 +94,11 @@
 </body>
 <script>
     let user = "<%= name %>";
+    console.log("namme is "+user+" user");
+    console.log(user.length);
+
     const amount = document.getElementById("amount");
     const sendbtn = document.querySelector(".sendbtn");
-    console.log(sendbtn);
     const send = document.querySelector(".send");
 
     sendbtn.addEventListener("click", () => {
