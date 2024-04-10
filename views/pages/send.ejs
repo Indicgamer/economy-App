@@ -109,6 +109,9 @@
                             <h1>${user}</h1>
                         </div >`
                     }
+                    else{
+                        searchedResults.innerHTML = "<h1>No results found</h1>";
+                    }
                 })
                 const searchedUsers = document.querySelectorAll('.searchedUser');
                 searchedUsers.forEach(user=>{

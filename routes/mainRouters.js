@@ -143,6 +143,9 @@ Router.get("/send",async (req,res)=>{
 Router.get("/send/:name",async (req,res)=>{
     if(req.cookies.name){
         try {
+            if(req.cookies.name === req.params.name){
+                return res.status(400).send("400 Bad Request");
+            }
             const sentTransactions = await transactionModel.find({sender:req.cookies.name,receiver:req.params.name});
             const receivedTransactions = await transactionModel.find({sender:req.params.name,receiver:req.cookies.name});
             const transactions = [...sentTransactions,...receivedTransactions];
